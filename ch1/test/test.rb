@@ -22,5 +22,23 @@ class MyTest < Test::Unit::TestCase
         expected = "Rental Record for Carlo I PUFFI Amount owned is 3.5 You earned 1 frequent renter points"
         assert_equal(expected, customer.statement)
     end
+    
+    def testNewReleasMovie
+        movie = Movie.new("DALTANIUS", 1)
+        rental = Rental.new(movie,2)
+        customer = Customer.new("Carlo")
+        customer.add_rental(rental)
+        expected = "Rental Record for Carlo DALTANIUS Amount owned is 2 You earned 2 frequent renter points"
+        assert_equal(expected, customer.statement)
+    end
+    
+    def testChildrentMovieWithFourDaysRented
+        movie = Movie.new("HELLOSPANK", 2)
+        rental = Rental.new(movie,4)
+        customer = Customer.new("Carlo")
+        customer.add_rental(rental)
+        expected = "Rental Record for Carlo HELLOSPANK Amount owned is 3.0 You earned 1 frequent renter points"
+        assert_equal(expected, customer.statement)
+    end
 end
 
