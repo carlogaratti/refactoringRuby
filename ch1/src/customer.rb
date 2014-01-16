@@ -1,13 +1,14 @@
 require File.expand_path(File.dirname(__FILE__)) + '/../src/amount_strategy'
 require File.expand_path(File.dirname(__FILE__)) + '/../src/frequent_renter'
 require File.expand_path(File.dirname(__FILE__)) + '/../src/amount_newrelease_strategy'
+
 class Customer
     attr_reader :name
 
-    def initialize(name)
+    def initialize(name,amountStrategy)
         @name = name
         @rentals = []
-        @amountStrategy = {0 => AmountStrategyRegular.new, 1 => AmountNewReleaseStrategy.new, 2 => AmountStrategyChildren.new}
+        @amountStrategy = amountStrategy
         @frequentRenter = FrequentRenter.new
     end
 
@@ -16,15 +17,12 @@ class Customer
     end
 
     def statement
-        result = ''
-        total_amount, frequent_renter_points = 0,0 
+        total_amount, frequent_renter_points = 0,0, result = '' 
         title_names = ''
         @rentals.each do |element|
-            this_amount = 0
-            this_amount +=  lookupAmountStrategy(element.movie.price_code).amount(this_amount, element)
             frequent_renter_points += @frequentRenter.sum(frequent_renter_points, element)
             title_names += element.movie.title + " " 
-            total_amount += this_amount
+            total_amount += lookupAmountStrategy(element.movie.price_code).amount(element)
         end
 
         result += printNamesOn(title_names)
