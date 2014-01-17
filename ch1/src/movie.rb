@@ -13,16 +13,8 @@ class Movie
         @title, self.price_code = title, price_code
     end
     
-    def price_code=(value)
-        @price_code = value
-        @price = case price_code
-                 when REGULAR 
-                     RegularPrice.new
-                 when NEW_RELEASE 
-                     NewReleasePrice.new
-                 when CHILDRENS 
-                     ChildrenPrice.new
-                 end
+    def price_code=(price_code)
+        @price = price_code
     end
 
     

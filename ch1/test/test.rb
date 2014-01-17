@@ -2,11 +2,12 @@ require 'test/unit'
 require File.expand_path(File.dirname(__FILE__)) + '/../src/customer'
 require File.expand_path(File.dirname(__FILE__)) + '/../src/movie'
 require File.expand_path(File.dirname(__FILE__)) + '/../src/rental'
+require File.expand_path(File.dirname(__FILE__)) + '/../src/price'
 
 class MyTest < Test::Unit::TestCase
 
     def testRegularMovieOneDayRented
-        movie = Movie.new("I PUFFI", 0)
+        movie = Movie.new("I PUFFI", RegularPrice.new)
         rental = Rental.new(movie, 1)
         customer = Customer.new("Carlo")
         customer.add_rental(rental)
@@ -15,7 +16,7 @@ class MyTest < Test::Unit::TestCase
     end
 
     def testRegularMovieThreeDayRented
-        movie = Movie.new("I PUFFI", 0)
+        movie = Movie.new("I PUFFI", RegularPrice.new)
         rental = Rental.new(movie,3)
         customer = Customer.new("Carlo")
         customer.add_rental(rental)
@@ -24,7 +25,7 @@ class MyTest < Test::Unit::TestCase
     end
     
     def testNewReleasMovie
-        movie = Movie.new("DALTANIUS", 1)
+        movie = Movie.new("DALTANIUS", NewReleasePrice.new)
         rental = Rental.new(movie,2)
         customer = Customer.new("Carlo")
         customer.add_rental(rental)
@@ -33,7 +34,7 @@ class MyTest < Test::Unit::TestCase
     end
     
     def testChildrentMovieWithFourDaysRented
-        movie = Movie.new("HELLOSPANK", 2)
+        movie = Movie.new("HELLOSPANK", ChildrenPrice.new)
         rental = Rental.new(movie,4)
         customer = Customer.new("Carlo")
         customer.add_rental(rental)
