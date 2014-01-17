@@ -13,14 +13,10 @@ class Customer
     def statement
         total_amount, frequent_renter_points = 0,0 
         result = "Rental Record for #{@name} "
-        @rentals.each do |element|
-            this_amount = element.charge
-            frequent_renter_points += 1
-            if element.movie.price_code == Movie::NEW_RELEASE && element.days_rented > 1
-                frequent_renter_points += 1
-            end
-            result += element.movie.title + " " 
-            total_amount +=  this_amount
+        @rentals.each do |aRental|
+            result += aRental.movie.title + " " 
+            total_amount +=  aRental.charge
+            frequent_renter_points += aRental.freq_renter_points
         end
 
         result += "Amount owned is #{total_amount} "
@@ -29,3 +25,4 @@ class Customer
     end
 
 end
+
