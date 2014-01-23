@@ -4,17 +4,30 @@ require 'test/unit'
 class Account
 
     def gamma(input_val, quantity, year_to_date)
-        imp_value1 = (input_val * quantity) -20
-        imp_value2 = (input_val * year_to_date) /quantity
-        if (input_val > 10)
-            imp_value2 = 50
-        end
-        return  imp_value1 - imp_value2
+      Gamma.new(input_val, quantity, year_to_date).compute
     end
 end
 
 
+class Gamma
+    def initialize(input_val, quantity, year_to_date)
+        @input_val = input_val
+        @quantity = quantity
+        @year_to_date = year_to_date
+    end
 
+    def compute
+        imp_val1 - imp_val2
+    end
+
+    def imp_val1
+         (@input_val * @quantity) -20
+    end
+
+    def imp_val2
+        @input_val >10 ? 50 : (@input_val * @year_to_date) / @quantity
+    end
+end
 
 class MyTest < Test::Unit::TestCase
 
