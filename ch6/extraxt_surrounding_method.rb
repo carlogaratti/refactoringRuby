@@ -1,7 +1,11 @@
 def charge (amount, credit_card_number)
+       connect { |db|  db.save(amount, credit_card_number)}
+end
+
+def connect 
     begin
-        connection = DB::connect()
-        connection.send(amount, credit_card_number)
+        db = DB::connect()
+        yield db       
         "OK"
     rescue IOError => e
         puts 'error'
@@ -19,7 +23,7 @@ class Connection
     def self.connection
         Connection.new
     end
-    def send (amount, credit_card_number)
+    def save (amount, credit_card_number)
     end
 end
 
